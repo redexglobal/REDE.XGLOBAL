@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redex Global - Publicidade em Movimento</title>
+    <link rel="icon" type="image/png" href="file:///C:/Users/Vilson%20Moto%20Paiva/OneDrive/%C3%81rea%20de%20Trabalho/redex2/public/images/LOGO%201.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8A2BE2;
+            --primary-dark: #4B0082;
+            --secondary: #9370DB;
+            --accent: #00FFFF;
+            --text: #E6E6FA;
+            --text-light: #B8B8FF;
+            --background: #1A1A2E;
+            --surface: #16213E;
+            --surface-light: #1F305E;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-hover: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            --neon-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent), 0 0 30px var(--accent);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: var(--background);
+            color: var(--text);
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(0, 255, 255, 0.05) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(147, 112, 219, 0.05) 25%, transparent 25%);
+            background-size: 100% 100%, 20px 20px, 20px 20px;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent 0,
+                    transparent 1px,
+                    rgba(138, 43, 226, 0.1) 1px,
+                    rgba(138, 43, 226, 0.1) 3px
+                );
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--accent);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 40px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            background: rgba(26, 26, 46, 0.95);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            height: 70px;
+            filter: drop-shadow(0 0 10px var(--accent));
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 20px var(--accent));
+        }
+
+        .slogan {
+            height: 40px;
+            filter: brightness(1.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            padding: 0.8rem 1.5rem;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 9rem auto 0;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            padding: 6rem 0;
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(147, 112, 219, 0.1)),
+                repeating-linear-gradient(
+                    to right,
+                    transparent,
+                    transparent 50px,
+                    rgba(0, 255, 255, 0.1) 50px,
+                    rgba(0, 255, 255, 0.1) 51px
+                );
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero img {
+            max-width: 400px;
+            margin: 0 auto 3rem;
+            filter: drop-shadow(0 0 20px var(--accent));
+            transition: all 0.5s ease;
+        }
+
+        .hero img:hover {
+            transform: translateY(-10px);
+            filter: drop-shadow(0 0 30px var(--accent));
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .image-card {
+            position: relative;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--surface);
+        }
+
+        .image-card::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+            transform: rotate(45deg);
+        }
+
+        .image-card:hover::before {
+            top: 100%;
+            left: 100%;
+        }
+
+        .image-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: all 0.5s ease;
+            filter: brightness(0.8) contrast(1.2);
+        }
+
+        .image-card:hover img {
+            transform: scale(1.1);
+            filter: brightness(1) contrast(1.2);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, var(--surface), transparent);
+            padding: 2rem;
+            color: var(--text);
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+
+        .image-overlay h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .image-card:hover .image-overlay {
+            transform: translateY(0);
+        }
+
+        .benefits {
+            background: var(--surface);
+            padding: 6rem 3rem;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            margin-bottom: 4rem;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient);
+            box-shadow: var(--neon-shadow);
+        }
+
+        .benefits h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--accent);
+            font-size: 3rem;
+            position: relative;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: var(--surface-light);
+            padding: 2.5rem;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--accent);
+            transition: all 0.3s ease;
+            box-shadow: var(--neon-shadow);
+        }
+
+        .benefit-card:hover::before {
+            height: 100%;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .benefit-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .benefit-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .cta {
+            text-align: center;
+            padding: 6rem 3rem;
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            color: var(--text);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(147, 112, 219, 0.1)),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 255, 255, 0.05) 10px,
+                    rgba(0, 255, 255, 0.05) 20px
+                );
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            margin-bottom: 2rem;
+            font-size: 3.5rem;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent);
+        }
+
+        .cta p {
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: transparent;
+            color: var(--accent);
+            text-decoration: none;
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(0, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+            transform: rotate(45deg);
+        }
+
+        .button:hover::before {
+            top: 100%;
+            left: 100%;
+        }
+
+        .button:hover {
+            color: var(--text);
+            background: var(--accent);
+            box-shadow: 0 0 20px var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer {
+            background: var(--surface);
+            color: var(--text);
+            padding: 5rem 0 3rem;
+            margin-top: auto;
+            position: relative;
+            border-top: 1px solid var(--accent);
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--accent);
+            box-shadow: var(--neon-shadow);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section {
+            position: relative;
+        }
+
+        .footer-section h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent);
+            box-shadow: var(--neon-shadow);
+        }
+
+        .footer-section p {
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--text);
+            font-size: 1.2rem;
+            text-decoration: none;
+            padding: 0.8rem;
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--surface);
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero img {
+                max-width: 300px;
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits {
+                padding: 4rem 1.5rem;
+            }
+
+            .cta {
+                padding: 4rem 1.5rem;
+            }
+
+            .cta h2 {
+                font-size: 2.5rem;
+            }
+
+            .branding-text {
+                font-size: 1rem;
+                letter-spacing: 2px;
+            }
+
+            .branding-text::before,
+            .branding-text::after {
+                width: 20px;
+                margin-right: 10px;
+                margin-left: 10px;
+            }
+
+            .container {
+                margin-top: 11rem;
+            }
+        }
+
+        .about-section {
+            background: var(--surface);
+            padding: 6rem 3rem;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            margin-bottom: 4rem;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(147, 112, 219, 0.1)),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(0, 255, 255, 0.03) 20px,
+                    rgba(0, 255, 255, 0.03) 40px
+                );
+            z-index: 0;
+        }
+
+        .about-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--accent);
+            font-size: 3rem;
+            text-shadow: 0 0 20px var(--accent);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .about-card {
+            background: var(--surface-light);
+            padding: 2.5rem;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--accent);
+            transition: all 0.3s ease;
+            box-shadow: var(--neon-shadow);
+        }
+
+        .about-card:hover::before {
+            height: 100%;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .about-card h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .about-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .about-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .about-section h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        .branding-banner {
+            background: var(--surface);
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            transform: translateY(-100%);
+            animation: slideDown 0.5s forwards;
+        }
+
+        .branding-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .branding-text::before,
+        .branding-text::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30px;
+            height: 1px;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .branding-text::before {
+            right: 100%;
+            margin-right: 15px;
+        }
+
+        .branding-text::after {
+            left: 100%;
+            margin-left: 15px;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .contact-section {
+            background: var(--surface);
+            padding: 6rem 3rem;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            margin-bottom: 4rem;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(147, 112, 219, 0.1)),
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 255, 255, 0.02) 10px,
+                    rgba(0, 255, 255, 0.02) 20px
+                );
+            z-index: 0;
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--accent);
+            font-size: 3rem;
+            text-shadow: 0 0 20px var(--accent);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-card {
+            background: var(--surface-light);
+            padding: 2.5rem;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 0;
+            background: var(--accent);
+            transition: all 0.3s ease;
+            box-shadow: var(--neon-shadow);
+        }
+
+        .contact-card:hover::before {
+            height: 100%;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .contact-card h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-link {
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            border: 1px solid var(--accent);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .contact-link:hover {
+            background: var(--accent);
+            color: var(--surface);
+            transform: translateX(10px);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+        }
+
+        .contact-info p {
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .contact-section h2 {
+                font-size: 2.5rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-link {
+                padding: 0.6rem;
+            }
+        }
+
+        .demo-section {
+            background: var(--surface);
+            padding: 6rem 3rem;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            margin-bottom: 4rem;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(147, 112, 219, 0.1)),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 20px,
+                    rgba(0, 255, 255, 0.02) 20px,
+                    rgba(0, 255, 255, 0.02) 40px
+                );
+            z-index: 0;
+        }
+
+        .demo-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .demo-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--accent);
+            font-size: 3rem;
+            text-shadow: 0 0 20px var(--accent);
+        }
+
+        .demo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .demo-image-container {
+            position: relative;
+            border: 2px solid var(--accent);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(
+                45deg,
+                rgba(138, 43, 226, 0.1),
+                rgba(0, 255, 255, 0.1)
+            );
+        }
+
+        .demo-image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(0, 255, 255, 0.1)),
+                repeating-linear-gradient(
+                    -45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 255, 255, 0.02) 10px,
+                    rgba(0, 255, 255, 0.02) 20px
+                );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .demo-image {
+            width: 100%;
+            height: 500px;
+            object-fit: contain;
+            display: block;
+            transition: all 0.5s ease;
+            filter: brightness(1.2) contrast(1.1);
+            background-color: var(--surface);
+            padding: 1rem;
+        }
+
+        .demo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(22, 33, 62, 0.95), transparent);
+            padding: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .demo-image-container:hover .demo-overlay {
+            transform: translateY(0);
+        }
+
+        .demo-text {
+            text-align: center;
+        }
+
+        .demo-text h3 {
+            color: var(--accent);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--accent);
+        }
+
+        .demo-text p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .demo-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: var(--accent);
+            text-decoration: none;
+            border: 2px solid var(--accent);
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        .demo-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .demo-button:hover::before {
+            left: 100%;
+        }
+
+        .demo-button:hover {
+            background: var(--accent);
+            color: var(--surface);
+            box-shadow: 0 0 20px var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .button-effect {
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 300%;
+            height: 300%;
+            background: linear-gradient(
+                60deg,
+                transparent,
+                rgba(0, 255, 255, 0.2),
+                transparent
+            );
+            transform: rotate(45deg);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .demo-button:hover .button-effect {
+            left: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .demo-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .demo-section h2 {
+                font-size: 2.5rem;
+            }
+
+            .demo-text h3 {
+                font-size: 1.5rem;
+            }
+
+            .demo-overlay {
+                padding: 1.5rem;
+            }
+
+            .demo-button {
+                padding: 0.8rem 2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="branding-banner">
+        <span class="branding-text">Sua Marca em Movimento</span>
+    </div>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="file:///C:/Users/Vilson%20Moto%20Paiva/OneDrive/%C3%81rea%20de%20Trabalho/redex2/public/images/LOGO%201.png" alt="Redex Global Logo" class="logo">
+                <img src="file:///C:/Users/Vilson%20Moto%20Paiva/OneDrive/%C3%81rea%20de%20Trabalho/redex2/public/images/slogan.png" alt="Redex Global Slogan" class="slogan">
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Início</a>
+                <a href="#sobre" class="nav-link">Sobre</a>
+                <a href="#contato" class="nav-link">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <img src="file:///C:/Users/Vilson%20Moto%20Paiva/OneDrive/%C3%81rea%20de%20Trabalho/redex2/public/images/LOGO%201.png" alt="Redex Global Logo">
+                <h1>Redex Global Goiânia</h1>
+                <p>Líderes na revolução publicitária de Goiás! Transformando a maneira como as marcas se conectam com seu público-alvo através da nossa inovadora mídia Out-of-Home.</p>
+            </div>
+        </section>
+
+        <div class="image-grid">
+            <div class="image-card">
+                <img src="file:///C:/Users/Vilson%20Moto%20Paiva/OneDrive/%C3%81rea%20de%20Trabalho/redex2/public/images/WP1.png" alt="Painel LED em moto">
+                <div class="image-overlay">
+                    <h3>Tecnologia de Ponta</h3>
+                    <p>Painéis LED de alta resolução para máximo impacto visual</p>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="file:///C:/Users/Vilson%20Moto%20Paiva/OneDrive/%C3%81rea%20de%20Trabalho/redex2/public/images/WP2.png" alt="Publicidade em movimento">
+                <div class="image-overlay">
+                    <h3>Alcance Dinâmico</h3>
+                    <p>Sua marca em movimento por toda a cidade</p>
+                </div>
+            </div>
+            <div class="image-card">
+                <img src="file:///C:/Users/Vilson%20Moto%20Paiva/OneDrive/%C3%81rea%20de%20Trabalho/redex2/public/images/WP3.png" alt="Impacto visual">
+                <div class="image-overlay">
+                    <h3>Impacto Garantido</h3>
+                    <p>Visibilidade incomparável para sua marca</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="demo-section">
+            <div class="demo-content">
+                <h2>Nossa Tecnologia em Ação</h2>
+                <div class="demo-container">
+                    <div class="demo-image-container">
+                        <img src="file:///C:/Users/Vilson%20Moto%20Paiva/OneDrive/%C3%81rea%20de%20Trabalho/redex2/public/images/LOGO%201.png" alt="Logo Redex Global" class="demo-image">
+                        <div class="demo-overlay">
+                            <div class="demo-text">
+                                <h3>Painéis LED de Alta Resolução</h3>
+                                <p>Impacto visual garantido: Sua marca brilhando nas ruas de Goiânia com nossa tecnologia LED de última geração</p>
+                            </div>
+                            <a href="https://wa.me/5562984924326" class="demo-button" target="_blank">
+                                Saiba Mais
+                                <span class="button-effect"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="benefits">
+            <h2>Benefícios Exclusivos</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h3>Visibilidade em Movimento</h3>
+                    <p>Sua marca vista por milhões enquanto nossos painéis viajam pelas ruas.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Conteúdo Cativante</h3>
+                    <p>Capacidade para até 50 vídeos de alta qualidade, assegurando propagandas impactantes.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Flexibilidade Total</h3>
+                    <p>Atualize suas campanhas a qualquer momento, mantendo seu conteúdo sempre relevante.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Autonomia Energética</h3>
+                    <p>Bateria que suporta até 9 horas de operação contínua.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Monitoramento em Tempo Real</h3>
+                    <p>Dados analíticos para ajustar sua estratégia sempre que necessário.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <h3>Suporte Personalizado</h3>
+                    <p>Estamos aqui para criar campanhas que atendam às suas necessidades específicas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="about-section">
+            <div class="about-content">
+                <h2>Sobre Nós</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>Nossa Missão</h3>
+                        <p>Na Redex Global, estamos revolucionando a forma como as marcas se conectam com seu público, redefinindo o conceito de mídia Out-of-Home (OOH) com inovação, tecnologia e mobilidade. Entendemos que, no mundo atual, alcançar uma audiência ampla, diversificada e engajada é um dos maiores desafios para empresas de todos os tamanhos.</p>
+                        <p>Por isso, desenvolvemos uma solução única e de alto impacto: mega painéis de LED instalados nas bags das motos de entrega — levando a publicidade para as ruas, em movimento e em tempo real.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <h3>Nosso Propósito</h3>
+                        <p>Nosso propósito vai além da simples exposição de marcas; queremos criar experiências visuais memoráveis, que acompanhem o ritmo acelerado das cidades modernas e transformem o cenário publicitário urbano. Acreditamos no poder da mobilidade para multiplicar a visibilidade, e é assim que garantimos que sua mensagem chegue onde o público está, de forma dinâmica e personalizada.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <h3>Por Que Fazemos o Que Fazemos</h3>
+                        <p>Vivemos em um mundo em constante transformação digital, onde a atenção do consumidor é fragmentada e cada segundo conta. Pensando nisso, unimos tecnologia de ponta com estratégias inteligentes de comunicação para oferecer às marcas uma plataforma inovadora, flexível e eficaz.</p>
+                        <p>Nossa visão é ser o principal motor da evolução da mídia Out-of-Home, democratizando o acesso a anúncios que são ao mesmo tempo tecnológicos, sustentáveis e mensuráveis.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <h3>Nossa Visão para o Futuro</h3>
+                        <p>O futuro da publicidade está em soluções inteligentes, móveis e conectadas. Estamos investindo constantemente em inovação para expandir nossa rede de painéis de LED por todo o país e, em breve, internacionalmente.</p>
+                        <p>Queremos integrar inteligência artificial, dados em tempo real e novas tecnologias para personalizar campanhas ao máximo e aumentar a eficiência das ações publicitárias.</p>
+                    </div>
+
+                    <div class="about-card">
+                        <h3>Nossa Expansão e Impacto Global</h3>
+                        <p>Com o crescimento acelerado do e-commerce e serviços de entrega, nossas motos equipadas com painéis LED se tornam canais estratégicos para as marcas alcançarem consumidores em trânsito. Estamos preparados para expandir nossa presença em grandes centros urbanos, potencializando a comunicação outdoor em escala global e consolidando parcerias que impulsionem o futuro da mídia exterior.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="cta-content">
+                <h2>Eleve sua Marca ao Próximo Nível</h2>
+                <p>Não perca a oportunidade de fazer parte desta revolução publicitária. Oferecemos contratos flexíveis de 3, 6, 9 ou 12 meses para garantir uma presença consistente da sua marca.</p>
+                <a href="#contato" class="button">Entre em Contato</a>
+            </div>
+        </section>
+
+        <section id="contato" class="contact-section">
+            <div class="contact-content">
+                <h2>Entre em Contato</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>Telefones</h3>
+                        <div class="contact-info">
+                            <a href="https://wa.me/5562984924326" class="contact-link" target="_blank">
+                                <span class="contact-icon">📱</span>
+                                (62) 98492-4326
+                            </a>
+                            <a href="https://wa.me/5562984452548" class="contact-link" target="_blank">
+                                <span class="contact-icon">📱</span>
+                                (62) 98445-2548
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <h3>Redes Sociais</h3>
+                        <div class="contact-info">
+                            <a href="https://www.instagram.com/redex.global/" class="contact-link" target="_blank">
+                                <span class="contact-icon">📸</span>
+                                @redex.global
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <h3>Horário de Atendimento</h3>
+                        <div class="contact-info">
+                            <p><span class="contact-icon">⏰</span> Segunda a Sexta: 9h às 18h</p>
+                            <p><span class="contact-icon">⏰</span> Sábado: 9h às 13h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <img src="file:///C:/Users/Vilson%20Moto%20Paiva/OneDrive/%C3%81rea%20de%20Trabalho/redex2/public/images/ISOTIPO%201.png" alt="Redex Global Isotipo" style="height: 50px; margin-bottom: 1.5rem;">
+                <p>Transformando a publicidade em movimento</p>
+                <p>Goiânia - GO</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <p>Telefones:</p>
+                <p>(62) 98492-4326</p>
+                <p>(62) 98445-2548</p>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/redex.global/" target="_blank">
+                        Instagram
+                    </a>
+                    <a href="https://wa.me/5562984924326" target="_blank">
+                        WhatsApp 1
+                    </a>
+                    <a href="https://wa.me/5562984452548" target="_blank">
+                        WhatsApp 2
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Horário de Atendimento</h3>
+                <p>Segunda a Sexta: 9h às 18h</p>
+                <p>Sábado: 9h às 13h</p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2024 Redex Global. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Efeito de navbar ao rolar
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Animação suave ao clicar nos links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
