@@ -12,9 +12,7 @@ export default function About() {
         <div className="about-grid">
           <div className="about-photo-wrap">
             <div className="about-photo-card">
-              <div className="about-photo-placeholder">
-                <img src="/images/LOGO 1.png" alt="Vilson Mota - Cultura Builder" />
-              </div>
+              <img src="/images/vilson-about.jpg" alt="Vilson Mota - Consultor de IA Cultura Builder Goiânia" />
             </div>
             <div className="about-role-badge">👤 Consultor de IA</div>
           </div>
