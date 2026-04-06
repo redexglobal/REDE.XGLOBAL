@@ -1,22 +1,35 @@
 export default function CTA() {
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    const target = document.querySelector('#contato')
-    if (target) target.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
-    <section className="cta">
-      <div className="cta-content">
-        <h2>Eleve sua Marca ao Próximo Nível</h2>
-        <p>
-          Não perca a oportunidade de fazer parte desta revolução publicitária.
-          Oferecemos contratos flexíveis de 3, 6, 9 ou 12 meses para garantir
-          uma presença consistente da sua marca.
-        </p>
-        <a href="#contato" className="button" onClick={handleClick}>
-          Entre em Contato
-        </a>
+    <section id="contato" className="section section-alt">
+      <div className="section-inner">
+        <div className="cta-box">
+          <div className="badge" style={{ margin: '0 auto 1.5rem' }}>🚀 Comece Agora</div>
+          <h2>
+            Pronto para levar sua empresa ao <span>próximo nível</span>?
+          </h2>
+          <p>
+            Agende uma consultoria gratuita e descubra como a IA pode transformar
+            os processos da sua empresa em Goiânia — em dias, não meses.
+          </p>
+          <div className="cta-buttons">
+            <a
+              href="https://wa.me/5562984924326"
+              className="btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💬 Agendar Diagnóstico Gratuito
+            </a>
+            <a
+              href="https://www.instagram.com/culturabuildergoiania/"
+              className="btn-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📸 Seguir no Instagram
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   )

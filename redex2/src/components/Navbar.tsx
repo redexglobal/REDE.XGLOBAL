@@ -3,33 +3,33 @@ import { useEffect } from 'react'
 export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
-      const nav = document.querySelector('.nav')
-      if (nav) {
-        nav.classList.toggle('scrolled', window.scrollY > 50)
-      }
+      document.querySelector('.nav')?.classList.toggle('scrolled', window.scrollY > 50)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href === '#') return
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault()
-    const target = document.querySelector(href)
-    if (target) target.scrollIntoView({ behavior: 'smooth' })
+    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
     <nav className="nav">
       <div className="nav-container">
-        <div className="logo-container">
-          <img src="/images/LOGO 1.png" alt="Cultura Builder Goiânia Logo" className="logo" />
-          <img src="/images/slogan.png" alt="Sua Marca em Movimento" className="slogan" />
-        </div>
+        <a href="#" className="nav-brand">
+          <img src="/images/ISOTIPO 1.png" alt="Cultura Builder" className="nav-logo" />
+          <span className="nav-brand-name">Vilson <span>Mota</span></span>
+        </a>
+
         <div className="nav-links">
-          <a href="#" className="nav-link" onClick={(e) => handleAnchorClick(e, '#')}>Início</a>
-          <a href="#sobre" className="nav-link" onClick={(e) => handleAnchorClick(e, '#sobre')}>Sobre</a>
-          <a href="#contato" className="nav-link" onClick={(e) => handleAnchorClick(e, '#contato')}>Contato</a>
+          <a href="#parceiros" className="nav-link" onClick={(e) => scrollTo(e, '#parceiros')}>Parceiros</a>
+          <a href="#sobre" className="nav-link" onClick={(e) => scrollTo(e, '#sobre')}>Sobre</a>
+          <a href="#servicos" className="nav-link" onClick={(e) => scrollTo(e, '#servicos')}>Serviços</a>
+          <a href="#contato" className="nav-link" onClick={(e) => scrollTo(e, '#contato')}>Resultados</a>
+          <a href="https://wa.me/5562984924326" className="nav-cta" target="_blank" rel="noopener noreferrer">
+            Agendar Consultoria
+          </a>
         </div>
       </div>
     </nav>
