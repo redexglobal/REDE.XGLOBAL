@@ -44,7 +44,7 @@ export default function Hero() {
 
         <div className="hero-right">
           <div className="hero-photo-card">
-            <img src="/images/vilson-hero.png" alt="Vilson Mota - Consultor de IA Cultura Builder" />
+            <img src="/images/vilson-hero.jpg" alt="Vilson Mota - Consultor de IA Cultura Builder" />
             <div className="hero-role-badge">👤 Consultor de IA</div>
           </div>
         </div>
