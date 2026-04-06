@@ -7,6 +7,7 @@ import About from './components/About'
 import CTA from './components/CTA'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import WhatsAppButton from './components/WhatsAppButton'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Contact />
       </div>
       <Footer />
+      <WhatsAppButton />
     </>
   )
 }
