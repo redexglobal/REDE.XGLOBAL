@@ -18,7 +18,7 @@ export default function Navbar() {
     <nav className="nav">
       <div className="nav-container">
         <a href="#" className="nav-brand">
-          <img src="/images/ISOTIPO 1.png" alt="Cultura Builder" className="nav-logo" />
+          <img src="/images/cultura-builder-icon.jpg" alt="Cultura Builder" className="nav-logo" />
           <span className="nav-brand-name">Vilson <span>Mota</span></span>
         </a>
 
