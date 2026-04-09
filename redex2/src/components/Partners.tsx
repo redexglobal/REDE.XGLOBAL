@@ -20,6 +20,21 @@ export default function Partners() {
   return (
     <section id="parceiros" className="section section-alt">
       <div className="section-inner">
+
+        {/* ── Logos Cultura Builder nos cantos ── */}
+        <div className="cb-brand-bar">
+          <img
+            src="/images/cultura-builder-logo.png"
+            alt="Cultura Builder"
+            className="cb-logo-left"
+          />
+          <img
+            src="/images/cultura-builder-icon.jpg"
+            alt="Cultura Builder Icon"
+            className="cb-logo-right"
+          />
+        </div>
+
         <div className="section-header">
           <div className="badge">🛡️ Ecossistema de Elite</div>
           <h2 className="section-title">
@@ -30,6 +45,16 @@ export default function Partners() {
             maiores potências tecnológicas do mundo. Não é apenas consultoria, é acesso ao
             ecossistema que está redefinindo a indústria.
           </p>
+        </div>
+
+        {/* ── Foto do Time ── */}
+        <div className="cb-team-wrap">
+          <img
+            src="/images/cultura-builder-time.png"
+            alt="Cultura Builder Time"
+            className="cb-team-img"
+          />
+          <div className="cb-team-badge">🚀 Cultura Builder Team</div>
         </div>
 
         <div className="partners-grid">
